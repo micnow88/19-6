@@ -4,6 +4,7 @@ class Stopwatch {
       this.display = display;
       this.reset();
       this.print(this.times);
+      this.addElement();
   }
 
   reset() {
@@ -19,7 +20,8 @@ class Stopwatch {
   }
 
   format(times) {
-    return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
+    var {minutes, seconds, miliseconds} = times;
+    return `${pad0(minutes)}:${pad0(seconds)}:${pad0(Math.floor(miliseconds))}`;
   }
 
   start() {
@@ -51,6 +53,34 @@ class Stopwatch {
     this.running = false;
     clearInterval(this.watch);
   }
+
+  addElement() {
+    const divStopWatch = document.getElementById('controls');
+
+    const startButton = document.createElement("button");
+    startButton.innerHTML = '<a href="#" class="button" id="start">Start</a>';
+
+    const stopButton = document.createElement("button");
+    stopButton.innerHTML = '<a href="#" class="button" id="stop">Stop</a>';
+
+    const restartButton = document.createElement("button");
+    restartButton.innerHTML = '<a href="#" class="button" id="restart">Restart</a>';
+
+    divStopWatch.append(startButton);
+    startButton.addEventListener('click', () => stopwatch.start());
+
+    divStopWatch.append(stopButton);
+    stopButton.addEventListener('click', () => stopwatch.stop());
+
+    divStopWatch.append(restartButton);
+    restartButton.addEventListener('click', () => stopwatch.restart());
+  }
+
+  restart() {
+    this.stop();
+    this.reset();
+    this.print();
+  }
 }
 
 function pad0(value) {
@@ -64,8 +94,11 @@ function pad0(value) {
 const stopwatch = new Stopwatch(
 document.querySelector('.stopwatch'));
 
-let startButton = document.getElementById('start');
+/*let startButton = document.getElementById('start');
 startButton.addEventListener('click', () => stopwatch.start());
 
 let stopButton = document.getElementById('stop');
 stopButton.addEventListener('click', () => stopwatch.stop());
+
+let restartButton = document.getElementById('restart');
+restartButton.addEventListener('click', () => stopwatch.restart());*/
